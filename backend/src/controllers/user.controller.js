@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import crypto from "crypto";
 import bcrypt, { hash } from "bcrypt";
 import { User } from "../models/user.model.js";
+import { Meeting } from "../models/meeting.model.js";
 
 
 const login = async (req, res) => {
@@ -52,4 +53,38 @@ const register = async (req, res) => {
     }
 }
 
-export { login, register };
+const getUserHistory = async (req, res) => {
+    const { token } = req.query;
+    try {
+        const user = await User.findOne({ token });
+        const meetings = await Meeting.find({user_id: user.username});
+        res.json(meetings);
+        if (!user) {
+            return res.status(httpStatus.NOT_FOUND).json({ message: "User not found" });
+        }
+        return res.status(httpStatus.OK).json({ message: "User history fetched successfully", history: user.history });
+    } catch (error) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: "Internal server error" });
+    }
+}
+
+const addToHistory = async (req, res) => {
+    const {token, meeting_code} = req.body;
+    try {
+        const user = await User.findOne({ token });
+        if (!user) {
+            return res.status(httpStatus.NOT_FOUND).json({ message: "User not found" });
+        }
+        console.log(user.username, token, meeting_code);
+        const newMeeting = new Meeting({
+            user_id: user.username,
+            meetingCode: meeting_code
+        })
+        await newMeeting.save();
+        return res.status(httpStatus.OK).json({ message: "User history updated successfully" });
+    } catch (error) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: "Internal server error" });
+    }
+}
+
+export { login, register, getUserHistory, addToHistory };

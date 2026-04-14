@@ -24,41 +24,22 @@ const peerConfigConnections = {
 export default function VideoMeetComponent() {
   var socketRef = useRef();
   let socketIdRef = useRef();
-
   let localVideoref = useRef();
-
-  let [videoAvailable, setVideoAvailable] = useState(true);
-
-  let [audioAvailable, setAudioAvailable] = useState(true);
-
-  let [video, setVideo] = useState([]);
-
-  let [audio, setAudio] = useState();
-
-  let [screen, setScreen] = useState();
-
-  let [showModal, setModal] = useState(true);
-
-  let [screenAvailable, setScreenAvailable] = useState();
-
-  let [messages, setMessages] = useState([]);
-
-  let [message, setMessage] = useState("");
-
-  let [newMessages, setNewMessages] = useState(3);
-
-  let [askForUsername, setAskForUsername] = useState(true);
-
-  let [username, setUsername] = useState("");
-
   const videoRef = useRef([]);
 
+  let [videoAvailable, setVideoAvailable] = useState(true);
+  let [audioAvailable, setAudioAvailable] = useState(true);
+  let [video, setVideo] = useState([]);
+  let [audio, setAudio] = useState();
+  let [screen, setScreen] = useState();
+  let [showModal, setModal] = useState(true);
+  let [screenAvailable, setScreenAvailable] = useState();
+  let [messages, setMessages] = useState([]);
+  let [message, setMessage] = useState("");
+  let [newMessages, setNewMessages] = useState(3);
+  let [askForUsername, setAskForUsername] = useState(true);
+  let [username, setUsername] = useState("");
   let [videos, setVideos] = useState([]);
-
-  // TODO
-  // if(isChrome() === false) {
-
-  // }
 
   useEffect(() => {
     console.log("HELLO");
@@ -150,7 +131,6 @@ export default function VideoMeetComponent() {
       if (id === socketIdRef.current) continue;
 
       connections[id].addStream(window.localStream);
-
       connections[id].createOffer().then((description) => {
         console.log(description);
         connections[id]
@@ -186,7 +166,6 @@ export default function VideoMeetComponent() {
 
           for (let id in connections) {
             connections[id].addStream(window.localStream);
-
             connections[id].createOffer().then((description) => {
               connections[id]
                 .setLocalDescription(description)
@@ -234,7 +213,6 @@ export default function VideoMeetComponent() {
       if (id === socketIdRef.current) continue;
 
       connections[id].addStream(window.localStream);
-
       connections[id].createOffer().then((description) => {
         connections[id]
           .setLocalDescription(description)
@@ -318,9 +296,7 @@ export default function VideoMeetComponent() {
     socketRef.current.on("connect", () => {
       socketRef.current.emit("join-call", window.location.href);
       socketIdRef.current = socketRef.current.id;
-
       socketRef.current.on("chat-message", addMessage);
-
       socketRef.current.on("user-left", (id) => {
         setVideos((videos) => videos.filter((video) => video.socketId !== id));
       });
@@ -487,8 +463,6 @@ export default function VideoMeetComponent() {
     console.log(socketRef.current);
     socketRef.current.emit("chat-message", message, username);
     setMessage("");
-
-    // this.setState({ message: "", sender: username })
   };
 
   let connect = () => {
