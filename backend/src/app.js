@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -7,6 +8,7 @@ import { ConnectToSocket } from "./controllers/socketManager.js";
 
 import userRouter from "./routes/user.routes.js";
 
+dotenv.config();
 const app = express();
 const server = createServer(app);
 const io = ConnectToSocket(server);
@@ -21,8 +23,8 @@ app.use("/api/v1/user", userRouter);
 
 const start = async () => {
     app.set("mongo_user")
-    const connectionDb = await mongoose.connect("mongodb://anshraj0078_db_user:AfZjYSF7KPl4a41X@ac-sc4tjyj-shard-00-00.vce31kn.mongodb.net:27017,ac-sc4tjyj-shard-00-01.vce31kn.mongodb.net:27017,ac-sc4tjyj-shard-00-02.vce31kn.mongodb.net:27017/?replicaSet=atlas-134o7m-shard-0&ssl=true&authSource=admin");
-    console.log(`Database connected successfully: ${connectionDb.connection.host}`);
+    const connectionDb = await mongoose.connect(process.env.MONGODB_URI);
+    console.log(`Database connected successfully`);
     server.listen(app.get("port"), () => {
         console.log(`Server is running on port ${app.get("port")}`);
     })

@@ -23,7 +23,7 @@ const login = async (req, res) => {
 
             user.token = token;
             await user.save();
-            return res.status(httpStatus.OK).json({ message: "User logged in successfully", token: token });
+            return res.status(httpStatus.OK).json({ message: "User logged in successfully"});
         }
 
     } catch (error) {

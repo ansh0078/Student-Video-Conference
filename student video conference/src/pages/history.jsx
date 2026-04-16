@@ -37,39 +37,48 @@ export default function History() {
   };
 
   return (
-    <div>
-      <IconButton
-        onClick={() => {
-          routeTo("/home");
-        }}
-      >
-        <HomeIcon />
-      </IconButton>
-      {meetings.length !== 0 ? (
-        meetings.map((e, i) => {
-          return (
-            <>
-              <Card key={i} variant="outlined">
-                <CardContent>
-                  <Typography
-                    sx={{ fontSize: 14 }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    Code: {e.meetingCode}
-                  </Typography>
+    <div className="container py-4 vh-100 bg-light">
+      <div className="d-flex align-items-center mb-4">
+        <IconButton
+          onClick={() => {
+            routeTo("/home");
+          }}
+          className="bg-white shadow-sm"
+        >
+          <HomeIcon />
+        </IconButton>
+        <h2 className="ms-3 mb-0 fw-bold">Meeting History</h2>
+      </div>
 
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Date: {formatDate(e.date)}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </>
-          );
-        })
-      ) : (
-        <></>
-      )}
+      <div className="row g-4">
+        {meetings.length !== 0 ? (
+          meetings.map((e, i) => {
+            return (
+              <div className="col-12 col-md-6 col-lg-4" key={i}>
+                <Card variant="outlined" className="shadow-sm border-0 h-100 rounded-3">
+                  <CardContent>
+                    <Typography
+                      sx={{ fontSize: 14, fontWeight: "bold" }}
+                      color="primary"
+                      gutterBottom
+                    >
+                      Code: {e.meetingCode}
+                    </Typography>
+  
+                    <Typography sx={{ mb: 1 }} color="text.secondary">
+                      <span className="fw-medium text-dark">Date:</span> {formatDate(e.date)}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </div>
+            );
+          })
+        ) : (
+          <div className="col-12 text-center mt-5">
+            <h5 className="text-muted">No meeting history found</h5>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
