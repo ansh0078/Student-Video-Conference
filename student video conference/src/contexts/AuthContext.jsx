@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (request.status === httpStatus.CREATED) {
+        router("/home");
         return request.data.message;
       }
     } catch (err) {

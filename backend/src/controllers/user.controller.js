@@ -57,7 +57,7 @@ const getUserHistory = async (req, res) => {
     const { token } = req.query;
     try {
         const user = await User.findOne({ token });
-        const meetings = await Meeting.find({user_id: user.username});
+        const meetings = await Meeting.find({ user_id: user.username });
         res.json(meetings);
         if (!user) {
             return res.status(httpStatus.NOT_FOUND).json({ message: "User not found" });
@@ -69,7 +69,7 @@ const getUserHistory = async (req, res) => {
 }
 
 const addToHistory = async (req, res) => {
-    const {token, meeting_code} = req.body;
+    const { token, meeting_code } = req.body;
     try {
         const user = await User.findOne({ token });
         if (!user) {
