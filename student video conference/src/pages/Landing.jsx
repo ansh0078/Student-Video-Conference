@@ -1,8 +1,16 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "../App.css";
+
 
 export default function LandingPage() {
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
+
+  const handleGuestJoin = () => {
+    const roomId = Math.random().toString(36).substring(2, 8);
+    navigate(`/${roomId}`);
+  };
+
   return (
     <div className="landingPageContainer">
       <nav>
@@ -10,18 +18,22 @@ export default function LandingPage() {
           <h2>Student Video Conference</h2>
         </div>
         <div className="navLinks">
-          <p> Join as Guest</p>
+          <p onClick={handleGuestJoin} role="button" className="guest-button">
+            Join as Guest
+          </p>
           <p
             onClick={() => {
-              naviagte("/auth");
+              navigate("/auth");
             }}
+            className="register-link"
           >
             Register
           </p>
           <div
             role="button"
+            className="login-button"
             onClick={() => {
-              naviagte("/auth");
+              navigate("/auth");
             }}
           >
             <p>Login</p>
@@ -30,22 +42,20 @@ export default function LandingPage() {
       </nav>
 
       <div className="landingMainContainer">
-        <div>
+        <div className="hero-content">
           <h1>
-            <span style={{ color: "#FF9839" }}>Connect</span> with your loved
-            Ones
+            <span style={{ color: "var(--primary-color)" }}>Connect</span> with your loved Ones
           </h1>
           <p>
-            {" "}
             Join seamless video calls, share screens, and collaborate
             effortlessly with our intuitive video conferencing platform.
           </p>
-          <div role="button">
+          <div role="button" className="action-btn">
             <Link to={"/auth"}>Get Started</Link>
           </div>
         </div>
-        <div>
-          <img src="/mobile.png" alt="" />
+        <div className="hero-image">
+          <img src="/mobile.png" alt="Mobile App Display" />
         </div>
       </div>
     </div>

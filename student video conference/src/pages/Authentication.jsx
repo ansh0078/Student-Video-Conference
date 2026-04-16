@@ -15,9 +15,24 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthContext } from "../contexts/AuthContext";
 import { Snackbar } from "@mui/material";
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#3b82f6", // Polite blue
+    },
+    secondary: {
+      main: "#FF9839", // Vibrant orange accent
+    },
+    background: {
+      default: "#f8fafc",
+      paper: "#ffffff",
+    },
+  },
+  typography: {
+    fontFamily: "'Inter', sans-serif",
+  },
+});
 
 export default function Authentication() {
   const [username, setUsername] = React.useState();
@@ -64,8 +79,7 @@ export default function Authentication() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
+            backgroundImage: "url(/meeting.png)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -75,7 +89,22 @@ export default function Authentication() {
             backgroundPosition: "center",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid 
+          item 
+          xs={12} 
+          sm={8} 
+          md={5} 
+          component={Paper} 
+          elevation={6} 
+          square
+          sx={{
+            animation: 'slideIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards',
+            '@keyframes slideIn': {
+              '0%': { transform: 'translateX(100%)', opacity: 0 },
+              '100%': { transform: 'translateX(0)', opacity: 1 },
+            }
+          }}
+        >
           <Box
             sx={{
               my: 8,

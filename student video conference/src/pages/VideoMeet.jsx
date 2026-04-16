@@ -36,7 +36,7 @@ export default function VideoMeetComponent() {
   let [screenAvailable, setScreenAvailable] = useState();
   let [messages, setMessages] = useState([]);
   let [message, setMessage] = useState("");
-  let [newMessages, setNewMessages] = useState(3);
+  let [newMessages, setNewMessages] = useState();
   let [askForUsername, setAskForUsername] = useState(true);
   let [username, setUsername] = useState("");
   let [videos, setVideos] = useState([]);
@@ -414,11 +414,21 @@ export default function VideoMeetComponent() {
 
   let handleVideo = () => {
     setVideo(!video);
-    // getUserMedia();
+    let stream = localVideoref.current.srcObject;
+    if (stream) {
+      stream.getVideoTracks().forEach(track => {
+        track.enabled = !video;
+      });
+    }
   };
   let handleAudio = () => {
     setAudio(!audio);
-    // getUserMedia();
+    let stream = localVideoref.current.srcObject;
+    if (stream) {
+      stream.getAudioTracks().forEach(track => {
+        track.enabled = !audio;
+      });
+    }
   };
 
   useEffect(() => {
@@ -520,6 +530,15 @@ export default function VideoMeetComponent() {
                     id="outlined-basic"
                     label="Enter Your chat"
                     variant="outlined"
+                    sx={{
+                      input: { color: "var(--text-light)" },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": { borderColor: "var(--border-color)" },
+                        "&:hover fieldset": { borderColor: "var(--primary-color)" },
+                      },
+                      "& .MuiInputLabel-root": { color: "var(--text-muted)" },
+                    }}
+                    fullWidth
                   />
                   <Button variant="contained" onClick={sendMessage}>
                     Send
@@ -532,18 +551,18 @@ export default function VideoMeetComponent() {
           )}
 
           <div className="buttonContainers">
-            <IconButton onClick={handleVideo} style={{ color: "white" }}>
+            <IconButton onClick={handleVideo} style={{ color: "white", backgroundColor: video ? "rgba(255,255,255,0.1)" : "#ef4444" }}>
               {video === true ? <VideocamIcon /> : <VideocamOffIcon />}
             </IconButton>
-            <IconButton onClick={handleEndCall} style={{ color: "red" }}>
+            <IconButton onClick={handleEndCall} style={{ color: "white", backgroundColor: "#ef4444" }}>
               <CallEndIcon />
             </IconButton>
-            <IconButton onClick={handleAudio} style={{ color: "white" }}>
+            <IconButton onClick={handleAudio} style={{ color: "white", backgroundColor: audio ? "rgba(255,255,255,0.1)" : "#ef4444" }}>
               {audio === true ? <MicIcon /> : <MicOffIcon />}
             </IconButton>
 
             {screenAvailable === true ? (
-              <IconButton onClick={handleScreen} style={{ color: "white" }}>
+              <IconButton onClick={handleScreen} style={{ color: "white", backgroundColor: screen ? "rgba(255,255,255,0.1)" : "#334155" }}>
                 {screen === true ? (
                   <ScreenShareIcon />
                 ) : (
@@ -554,10 +573,10 @@ export default function VideoMeetComponent() {
               <></>
             )}
 
-            <Badge badgeContent={newMessages} max={999} color="orange">
+            <Badge badgeContent={newMessages} max={999} color="error">
               <IconButton
                 onClick={() => setModal(!showModal)}
-                style={{ color: "white" }}
+                style={{ color: "white", backgroundColor: "rgba(255,255,255,0.1)", zIndex: 100 }}
               >
                 <ChatIcon />{" "}
               </IconButton>

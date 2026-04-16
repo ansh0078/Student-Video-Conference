@@ -1,59 +1,149 @@
 .landingPageContainer {
   width: 100vw;
   height: 100vh;
-  background: url("/background.png");
+  /* Premium dark background with gradient accent */
+  background: radial-gradient(circle at top left, #e683e2, var(--bg-dark));
   background-repeat: no-repeat;
   background-size: cover;
-  color: white;
+  color: var(--text-light);
+  overflow: hidden;
 }
 
 .landingPageContainer nav {
-  padding-inline: 1.2rem;
-  padding-block: 1.6rem;
+  padding-inline: 4rem;
+  padding-block: 2rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .landingPageContainer nav h2 {
   font-size: 1.8rem;
-  font-weight: 600;
+  font-weight: 700;
+  background: linear-gradient(to right, #ffedd5, var(--primary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
 }
 
 .landingPageContainer nav .navLinks {
   display: flex;
   align-items: center;
-  gap: 1.6rem;
+  gap: 2rem;
+  font-weight: 500;
+}
+
+.guest-button,
+.register-link {
   cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.guest-button:hover,
+.register-link:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  color: var(--primary-color);
+}
+
+.login-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-button:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 152, 57, 0.3);
 }
 
 .landingMainContainer {
   display: flex;
   justify-content: space-between;
-  padding-inline: 3rem;
-  height: 70vh;
+  padding-inline: 6rem;
+  height: calc(100vh - 100px);
   align-items: center;
+  gap: 4rem;
 }
 
-.landingMainContainer>div:nth-child(1) {
-  font-size: 1.2rem;
+.hero-content {
+  flex: 1;
+  max-width: 600px;
 }
 
-.landingMainContainer>div:nth-child(1) [role="button"] {
-  background-color: #D97500;
-  padding: 1rem;
-  border-radius: 20px;
+.hero-content h1 {
+  font-size: 4rem;
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.action-btn {
+  background: linear-gradient(135deg, var(--primary-color), #ea580c);
+  padding: 1rem 2.5rem;
+  border-radius: 30px;
   width: fit-content;
-  margin-top: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(234, 88, 12, 0.3);
 }
 
-.landingMainContainer>div:nth-child(1) [role="button"] a {
+.action-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(234, 88, 12, 0.4);
+}
+
+.action-btn a {
   text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
   color: white;
 }
 
-.landingMainContainer>div:nth-child(2) img {
-  height: 70vh;
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image img {
+  max-height: 70vh;
   width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .navBar {
